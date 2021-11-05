@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Поле ЧУДЕС!</title>
+</head>
+<body>
+ <h1>Поле чудес</h1>
+ <script>
+ 
+ var words = ["санчо","оксі", "жир", "сіжка","книжка","жинка","тестер","жменя"];
+ var word = words[Math.floor(Math.random() * words.length)];
+ var answerArray = [];
+ for (var i = 0; i < word.length; i++) {
+ answerArray[i] = "_";
+ }
+ var remainingLetters = word.length;
+ var popitki=10;
+ while (remainingLetters > 0 && popitki>0 ) {
+ alert(answerArray.join(" "));
+ var guess = prompt("Вгадайте одну букву, або натисніть відміна.");
+ if (guess === null) {
+ break;
+ } else if (guess.length !== 1) {
+ alert("Введіть одну буковку");
+ } else {
+    popitki--;
+    guess=guess.toLowerCase(); //час не міг дати дупля чого воно не працює) скобочки забув )
+ for (var j = 0; j < word.length; j++) {
+ if (word[j] === guess && answerArray[j]==="_") {
+ answerArray[j] = guess;
+ remainingLetters--;
+
+ }
+ }
+ }
+ }
+ alert(answerArray.join(" "));
+ if(popitki>0){
+ alert("Super! slovo bulo  " + word);
+}
+ else{alert("Ploha!Vse Ploha, slovo bulo "+word)}
+ </script>
+</body>
+</html>
