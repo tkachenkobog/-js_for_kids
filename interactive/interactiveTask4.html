@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>інтерактивне</title>
+</head>
+<body>
+ <h3 id="heading">вирішив методом тика, логіку написав за 5 мінут після того як перемалював координати в зошит)
+     <p> а от чому кожен раз треба шукати ID # heading і юзати до нього оффсет, якщо я їх задав на початку функції,</p>
+      а потім просто міняв++, я так і не поняв(</h3>
+ <script src="https://code.jquery.com/jquery-2.1.0.js"> 
+
+ </script>
+ <script>
+var mleft =0;
+var mtop =0;
+var clikCont=0;
+ var moveHeading = function () {
+ $("#heading").offset({ left: mleft, top: mtop });
+if (mtop===0 && mleft<200){
+     mleft++;
+ } else if (mleft===200 && mtop<200){
+     $("#heading").offset({top:mtop});
+     mtop++;
+ } else if(mtop===200 && mleft>=0){
+     $("#heading").offset({left:mleft});
+     mleft--;
+ } else if(mleft<=0 && mtop>0){
+     $("#heading").offset({top:mtop});
+     mtop--;
+ }
+
+ }
+
+
+
+var cleanshit = setInterval(moveHeading, 30);
+//$("#heading").click(function(){clearInterval(cleanshit);});
+$("#heading").click(function(){
+    clikCont++;
+    if(clikCont>=5){
+        $("#heading").text("клікнув 5 разів!Маестро!");
+    }
+})
+ </script>
+</body>
+</html>
