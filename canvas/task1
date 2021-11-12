@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Canvas</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <canvas id="canvas" width="600" height="600"></canvas>
+ <script>
+     var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+     var circle = function (x, y, radius, fillCircle) {
+ ctx.beginPath();
+ ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+ ctx.stroke();
+ if (fillCircle===true){
+    ctx.fillStyle="orange"
+    ctx.fill(); 
+ } else if(fillCircle===false){
+    ctx.fillStyle="black"
+    ctx.fill(); 
+ }
+ 
+};
+var snowman=function(x,y){
+    
+ctx.lineWidth = 4;
+ctx.strokeStyle="orange";
+circle(x+100,y+55,5,true);
+ctx.strokeStyle = "black";
+circle(x+100, y+50, 30);
+ctx.lineWidth=4;
+circle(x+90,y+40,4,false);
+circle(x+110,y+40,4,false);
+circle(x+100,y+140,60);
+circle(x+100,y+140,4,false);
+circle(x+100,y+160,4,false);
+circle(x+100,y+120,4,false);
+}
+snowman(5,5);
+
+
+      </script>
+</body>
+</html>
