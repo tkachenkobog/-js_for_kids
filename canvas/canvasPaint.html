@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Canvas</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" height="200"></canvas>
+ <script>
+     var canvas=document.getElementById("canvas");
+     var ctx = canvas.getContext("2d");
+     var circle = function (x, y, radius) {
+ ctx.beginPath();
+
+ ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+ ctx.stroke();
+};
+  canvas.onmousemove = function(event){
+var x = event.offsetX;
+var y = event.offsetY;
+ctx.fill();
+ctx.fillStyle="black";
+circle(x,y,5);
+  }
+    
+ 
+ 
+ </script>
+
+</body>
+</html>
