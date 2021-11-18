@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Поле ЧУДЕС!</title>
+</head>
+<body>
+  <canvas id="canvas" width="200" height="200"></canvas>
+ <h1>Поле чудес</h1>
+ <script>
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+ var pickWord = function () {
+      // Возвращает случайно выбранное слово
+var words = ["санчо","оксі", "жир", "сіжка","книжка","жинка","тестер","жменя"];
+return words[Math.floor(Math.random() * words.length)];
+    };
+
+    var setupAnswerArray = function (word) {
+      // Возвращает итоговый массив для заданного слова word
+var answerArray = [];
+for (var i = 0; i < word.length; i++) {
+answerArray[i] = "_"; }
+      return answerArray;
+    };
+
+    var showPlayerProgress = function (answerArray) {
+      // С помощью alert отображает текущее состояние игры
+      alert(answerArray.join(" "));
+    };
+
+    var getGuess = function () {
+      // Запрашивает ответ игрока с помощью prompt
+      return prompt("Вгадайте одну букву, або натисніть відміна.");
+    };
+
+    var updateGameState = function (guess, word, answerArray) {
+      // Обновляет answerArray согласно ответу игрока (guess)
+      // возвращает число, обозначающее, сколько раз буква guess
+      // встречается в слове, чтобы можно было обновить значение
+      // remainingLetters
+      var num1 = 0;
+      
+      for (var j = 0; j < word.length; j++) {
+        if (word[j] === guess) {
+          answerArray[j] = guess;
+          drawAnswer(guess,j);
+         num1++;
+        }
+       /*  if(word[j]!==guess) {
+          
+          mistake++;
+         } не можу зрозуміти чого воно видає NaN, я пробував оглошувати переміну mistake = числом  в самому початку, вирішив по іншому  */
+        
+        
+      }
+      
+
+      return num1; 
+    };
+
+    var showAnswerAndCongratulatePlayer = function (answerArray) {
+      // С помощью alert показывает игроку отгаданное слово
+      // и поздравляет его с победой
+      showPlayerProgress(answerArray);
+      alert("Super! slovo bulo  " + answerArray.join(""));
+    };
+
+    // word: загаданное слово
+    var word = pickWord();
+    // answerArray: итоговый массив
+    var answerArray = setupAnswerArray(word);
+    // remainingLetters: сколько букв осталось угадать
+    var remainingLetters = word.length;
+    var mistake = 0;
+    var draw = function(mistake){
+      ctx.lineWidth = 4;
+      if(mistake===0){
+        ctx.strokeRect(30, 30, 30, 30);
+    }else if (mistake === 1) {
+        ctx.beginPath();
+        ctx.moveTo(45, 60);
+        ctx.lineTo(45, 120);
+        ctx.stroke();
+      } else if (mistake === 2) {
+        ctx.beginPath();
+        ctx.moveTo(45, 120);
+        ctx.lineTo(10, 140);
+        ctx.stroke();
+      } else if (mistake === 3) {
+        ctx.beginPath();
+        ctx.moveTo(45, 120);
+        ctx.lineTo(75, 140);
+        ctx.stroke();
+      } else if (mistake === 4) {
+        ctx.beginPath();
+        ctx.moveTo(45, 80);
+        ctx.lineTo(10, 90);
+        ctx.stroke();
+      } else if (mistake === 5) {
+        ctx.beginPath();
+        ctx.moveTo(45, 80);
+        ctx.lineTo(80, 90);
+        ctx.stroke();
+      }
+    }
+    var drawLines = function (laters) {
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+
+      for (var i = 0; i < laters; i++) {
+        ctx.moveTo((i * 30) + 10, 190);
+        ctx.lineTo((i * 30) + 30, 190);
+      }
+
+      ctx.stroke();
+    };
+    var drawAnswer = function (guess, index) {
+      ctx.font = "24px Courier";
+      ctx.fillText(guess.toUpperCase(), (index * 30) + 10, 180);
+    };
+    var drawWrong = function (guess, index) {
+      ctx.font = "24px Courier";
+      ctx.fillText(guess.toUpperCase(), 180, (index * 20) + 40);
+      ctx.moveTo(180, (index * 20) + 30);
+      ctx.lineTo(200, (index * 20) + 30);
+      ctx.stroke();
+    };
+    drawLines(word.length);
+    while (remainingLetters > 0) {
+      showPlayerProgress(answerArray);
+      // guess: ответ игрока
+      var guess = getGuess();
+      if (guess === null) {
+        break;
+      } else if (guess.length !== 1) {
+        alert("Введіть одну буковку");
+      } else {
+        // correctGuesses: количество открытых букв
+        var correctGuesses = updateGameState(guess, word, answerArray);
+        remainingLetters -= correctGuesses;
+        if(correctGuesses===0){
+          drawWrong(guess,mistake);
+          draw(mistake);
+          mistake++;
+        }
+      }
+    }
+   
+
+  
+    showAnswerAndCongratulatePlayer(answerArray);
+ </script>
+</body>
+</html>
